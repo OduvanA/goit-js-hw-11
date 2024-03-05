@@ -1,6 +1,8 @@
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
+const lightbox = new SimpleLightbox('.images-container a', { captionsData: 'alt', });
+
 export function createImagesMarkup(images) {
 
   const imagesContainer = document.querySelector(".images-container");
@@ -19,10 +21,7 @@ export function createImagesMarkup(images) {
     </ul></div>`)
     .join("");
   imagesContainer.insertAdjacentHTML("beforeend", markup);
-
-  const lightbox = new SimpleLightbox('.images-container a', { captionsData: 'alt', });
   lightbox.refresh();
-
 }
 
    

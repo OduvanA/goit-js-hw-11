@@ -24,45 +24,45 @@ function submitHandler(event) {
   imageContainer.innerHTML = null;
 
   const inputValue = form.input.value.trim();
- 
-  if (inputValue) {
-    loader.classList.add('loader');
-    getImages(inputValue)
-      .then(({ hits }) => {
-        if (!hits.length) {
-          iziToast.error({
-            title: 'Error',
-            message:
-              'Sorry, there are no images matching your search query. Please try again!',
-            iconUrl: error,
-            fontSize: 'large',
-            position:	'topRight',
-            messageColor: 'white',
-            titleColor: 'white',
-            theme: 'dark',
-            timeout:	5000,
-            backgroundColor: '#EF4040',
-            progressBar: false,
-          });
-        }
-        createImagesMarkup(hits);
-        loader.classList.remove('loader');
-      })
-  } else {
+  loader.classList.add('loader');
+  if (!inputValue) {
     iziToast.error({
       title: 'Error',
       message:
-      'Sorry, there are no images matching your search query. Please try again!',
+        'Sorry, there are no images matching your search query. Please try again!',
       iconUrl: error,
       fontSize: 'large',
-      position:	'topRight',
+      position: 'topRight',
       messageColor: 'white',
       titleColor: 'white',
       theme: 'dark',
-      timeout:	5000,
+      timeout: 5000,
       backgroundColor: '#EF4040',
       progressBar: false,
     });
-
+    loader.classList.remove('loader');
+    return;
   }
+  
+  getImages(inputValue)
+    .then(({ hits }) => {
+      if (!hits.length) {
+        iziToast.error({
+          title: 'Error',
+          message:
+            'Sorry, there are no images matching your search query. Please try again!',
+          iconUrl: error,
+          fontSize: 'large',
+          position: 'topRight',
+          messageColor: 'white',
+          titleColor: 'white',
+          theme: 'dark',
+          timeout: 5000,
+          backgroundColor: '#EF4040',
+          progressBar: false,
+        });
+      }
+      createImagesMarkup(hits);
+      loader.classList.remove('loader');
+    }); 
 }
